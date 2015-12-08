@@ -5,6 +5,9 @@
   float: left;
   text-align: center;
 }
+.nav-pills{
+  margin-bottom: 15px;
+}
 .as-sortable-item-handle {
   text-align: center;
   vertical-align: middle;

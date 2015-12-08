@@ -53,35 +53,42 @@
   <div class="container" ng-controller="ActionCtrl">
 
 
-    <div ng-controller="ActionCtrl">
+    <ul class="nav nav-pills" role="tablist" id="myTabs">
+      <li role="presentation" class="active"><a href="#recipe" aria-controls="home" role="tab" data-toggle="tab">Contexto</a></li>
+      <li role="presentation"><a href="#action" aria-controls="profile" role="tab" data-toggle="tab">Ações</a></li>
+    </ul>
 
-      <div class="row">
-        <div id="sortable-container" class="col-md-12">
-          <div class="col-md-10 col-lg-10">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                Receita
-              </div>
-              <div class="panel-body">
-                <div class="sortable-row workspace" as-sortable="sortableOptions" data-ng-model="lists.recipe">
-                  <div ng-class="{'item-placeholder no-drag': item.type == 'placeholder'}" ng-repeat="item in lists.recipe" as-sortable-item>
-                    <div as-sortable-item-handle>{{item.name}}</div>
+
+    <div class="tab-content">
+      <div ng-controller="ContextCtrl" id="recipe" role="tabpanel" class="tab-pane active">
+        <div class="row">
+          <div id="sortable-container" class="col-md-12">
+            <div class="col-md-10 col-lg-10 row">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  Receita
+                </div>
+                <div class="panel-body">
+                  <div class="sortable-row workspace" as-sortable="sortableOptions" data-ng-model="lists.recipe">
+                    <div ng-class="{'item-placeholder no-drag': item.type == 'placeholder'}" ng-repeat="item in lists.recipe" as-sortable-item>
+                      <div as-sortable-item-handle>{{item.name}}</div>
+                    </div>
                   </div>
                 </div>
               </div>
+
             </div>
 
-          </div>
-
-          <div class="col-md-2 col-lg-2" style="float: right;">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                Situações
-              </div>
-              <div class="panel-body">
-                <div class="sortable-row" as-sortable="sortableCloneOptions" data-ng-model="lists.context">
-                  <div ng-repeat="item in lists.context" as-sortable-item>
-                    <div as-sortable-item-handle>{{item.name}}</div>
+            <div class="col-md-2 col-lg-2" style="float: right;">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  Situações
+                </div>
+                <div class="panel-body">
+                  <div class="sortable-row" as-sortable="sortableCloneOptions" data-ng-model="lists.context">
+                    <div ng-repeat="item in lists.context" as-sortable-item>
+                      <div as-sortable-item-handle>{{item.name}}</div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -89,8 +96,56 @@
           </div>
         </div>
       </div>
+
+      <div ng-controller="ActionCtrl" id="action" role="tabpanel" class="tab-pane active">
+        <div class="row">
+          <div id="sortable-container" class="col-md-12">
+            <div class="col-md-10 col-lg-10 row">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  Receita
+                </div>
+                <div class="panel-body">
+                  <div class="sortable-row workspace" as-sortable="sortableOptions" data-ng-model="lists.recipe">
+                    <div ng-class="{'item-placeholder no-drag': item.type == 'placeholder'}" ng-repeat="item in lists.recipe" as-sortable-item>
+                      <div as-sortable-item-handle>{{item.name}}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="col-md-2 col-lg-2" style="float: right;">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  Possíveis ações
+                </div>
+                <div class="panel-body">
+                  <div class="sortable-row" as-sortable="sortableCloneOptions" data-ng-model="lists.actions">
+                    <div ng-repeat="item in lists.actions" as-sortable-item>
+                      <div as-sortable-item-handle>{{item.name}}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
+
   </div>
 </body>
+
+<script type="text/javascript">
+  $(function() {
+    $('#myTabs a').click(function(e) {
+      e.preventDefault()
+      $(this).tab('show')
+    })
+  });
+</script>
 
 </html>
