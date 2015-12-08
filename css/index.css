@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url('../fonts/glyphicons-halflings-regular.eot');
+  src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
+}
 .as-sortable-item, .as-sortable-placeholder {
   display: inline-block;
   width: 124px;
@@ -9,10 +14,32 @@
   margin-bottom: 15px;
 }
 .as-sortable-item-handle {
+  overflow: hidden;
   text-align: center;
   vertical-align: middle;
-  line-height: 100px;
+  line-height: 60px;
+  color: #fff;
 }
+.workspace .as-sortable-item-handle {
+  line-height: 50px;
+}
+.sortable-icon{
+  color:#eee;
+  margin-top: 5px;
+  margin-left: 25px;
+}
+.sortable-options-remove{
+  opacity: 0.4;
+  color:#eee;
+  margin-top: 5px;
+  margin-right: 20px;
+}
+.sortable-options-edit{
+  opacity: 0.4;
+  color:#eee;
+  margin-top: 5px;
+}
+
 .item-placeholder {
   background: url("../img/ic_add_black_24dp_2x.png") no-repeat center;
   opacity: 0.2;

@@ -70,8 +70,23 @@
                 </div>
                 <div class="panel-body">
                   <div class="sortable-row workspace" as-sortable="sortableOptions" data-ng-model="lists.recipe">
-                    <div ng-class="{'item-placeholder no-drag': item.type == 'placeholder'}" ng-repeat="item in lists.recipe" as-sortable-item>
-                      <div as-sortable-item-handle>{{item.name}}</div>
+                    <div ng-class="{'item-placeholder no-drag': item.type == 'placeholder'}" ng-style="{'background-color': item.color}" ng-repeat="item in lists.recipe" as-sortable-item>
+                      <div class="row" ng-if="item.type != 'placeholder'">
+
+                        <a data-no-drag class="sortable-options-remove pull-right btn btn-xs" ng-click="removeItem($index)">
+                          <span class="glyphicon glyphicon-remove"></span>
+                        </a>
+                        <a data-no-drag class="sortable-options-edit pull-right btn btn-xs">
+                          <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                        <span data-no-drag class="sortable-icon pull-left" ng-click="removeItem($index)">
+                          <span class="glyphicon" ng-class="item.icon"></span>
+                        </span>
+
+                      </div>
+                      <div as-sortable-item-handle class="row">{{item.option.name}} {{item.option.categories[item.option.now.category]}} {{item.option.now.value}}</div>
+
+
                     </div>
                   </div>
                 </div>
@@ -86,8 +101,15 @@
                 </div>
                 <div class="panel-body">
                   <div class="sortable-row" as-sortable="sortableCloneOptions" data-ng-model="lists.context">
-                    <div ng-repeat="item in lists.context" as-sortable-item>
-                      <div as-sortable-item-handle>{{item.name}}</div>
+                    <div ng-repeat="item in lists.context" ng-style="{'background-color': item.color}" as-sortable-item>
+                      <div class="row">
+                        <span data-no-drag class="sortable-icon pull-left" ng-click="removeItem($index)">
+                          <span class="glyphicon" ng-class="item.icon"></span>
+                        </span>
+                      </div>
+                      <div class="row">
+                        <div as-sortable-item-handle>{{item.name}}</div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -138,4 +160,5 @@
 
   </div>
 </body>
+
 </html>
