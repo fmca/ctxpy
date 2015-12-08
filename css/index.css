@@ -1,0 +1,21 @@
+.as-sortable-item, .as-sortable-placeholder {
+  display: inline-block;
+  width: 124px;
+  height: 110px;
+  float: left;
+  text-align: center;
+}
+.as-sortable-item-handle {
+  text-align: center;
+  vertical-align: middle;
+  line-height: 100px;
+}
+.item-placeholder {
+  background: url("../img/ic_add_black_24dp_2x.png") no-repeat center;
+  opacity: 0.2;
+  width: 70px;
+  border: 0px solid black;
+}
+#sortable-container {
+  display: inline-block;
+}

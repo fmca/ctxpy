@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>IFCTT</title>
+  <link rel="stylesheet" href="css/lib/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
+  <link rel="stylesheet" href="css/lib/ng-sortable.min.css" media="screen" title="no title" charset="utf-8">
+  <link rel="stylesheet" href="css/lib/ng-sortable.style.min.css" media="screen" title="no title" charset="utf-8">
+  <link rel="stylesheet" href="css/index.css" media="screen" title="no title" charset="utf-8">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="js/lib/jquery.min.js" charset="utf-8"></script>
+  <script src="js/lib/angular.min.js" charset="utf-8"></script>
+  <script src="js/lib/bootstrap.min.js" charset="utf-8"></script>
+  <script src="js/lib/ng-sortable.min.js" charset="utf-8"></script>
+  <script src="js/modules.js" charset="utf-8"></script>
+  <script src="js/controllers.js" charset="utf-8"></script>
+</head>
+
+<body ng-app="ifctt">
+
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">IFCTT</a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="navbar">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">Home</a></li>
+          <li>
+            <a href="#"></a>
+          </li>
+
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <a href="#"></a>
+          </li>
+
+        </ul>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+  </nav>
+  <div class="container" ng-controller="ActionCtrl">
+
+
+    <div ng-controller="ActionCtrl">
+
+      <div class="row">
+        <div id="sortable-container" class="col-md-12">
+          <div class="col-md-10 col-lg-10">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                Receita
+              </div>
+              <div class="panel-body">
+                <div class="sortable-row workspace" as-sortable="sortableOptions" data-ng-model="lists.recipe">
+                  <div ng-class="{'item-placeholder no-drag': item.type == 'placeholder'}" ng-repeat="item in lists.recipe" as-sortable-item>
+                    <div as-sortable-item-handle>{{item.name}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col-md-2 col-lg-2" style="float: right;">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                Situações
+              </div>
+              <div class="panel-body">
+                <div class="sortable-row" as-sortable="sortableCloneOptions" data-ng-model="lists.context">
+                  <div ng-repeat="item in lists.context" as-sortable-item>
+                    <div as-sortable-item-handle>{{item.name}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
