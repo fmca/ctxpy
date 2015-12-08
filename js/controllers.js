@@ -23,7 +23,7 @@ ifctt.controller('ContextCtrl', function ($scope, $rootScope){
         allowDuplicates: false,
         containment: '#sortable-container',
         containerPositioning: 'relative',
-        itemMoved: function(obj){
+        orderChanged: function(obj){
           $scope.reorganize();
         }
     };
@@ -73,7 +73,7 @@ ifctt.controller('ContextCtrl', function ($scope, $rootScope){
         allowDuplicates: false,
         containment: '#sortable-container',
         containerPositioning: 'relative',
-        itemMoved: function(obj){
+        orderChanged: function(obj){
           $scope.reorganize();
         }
     };
