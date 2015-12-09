@@ -14,32 +14,36 @@
   margin-bottom: 15px;
 }
 .as-sortable-item-handle {
-  overflow: hidden;
   text-align: center;
   vertical-align: middle;
-  line-height: 60px;
   color: #fff;
 }
-.workspace .as-sortable-item-handle {
-  line-height: 50px;
+
+.as-sortable-item .square{
+  padding-top: 5px;
+}
+.square, .square .as-sortable-item-handle {
+  height: inherit;
+  width: inherit;
+  padding-bottom: 15px;
+}
+.square .as-sortable-item-handle{
+  display: table;
+  position: absolute;
+}
+.square .as-sortable-item-handle span{
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
 }
 .sortable-icon{
   color:#eee;
-  margin-top: 5px;
-  margin-left: 25px;
+  margin-left: 5px;
 }
-.sortable-options-remove{
+.sortable-option{
   opacity: 0.4;
   color:#eee;
-  margin-top: 5px;
-  margin-right: 20px;
 }
-.sortable-options-edit{
-  opacity: 0.4;
-  color:#eee;
-  margin-top: 5px;
-}
-
 .item-placeholder {
   background: url("../img/ic_add_black_24dp_2x.png") no-repeat center;
   opacity: 0.2;
