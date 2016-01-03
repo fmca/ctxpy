@@ -13,11 +13,11 @@ ifctt.controller('ContextCtrl', function($scope, $rootScope, $http, contextIngre
     $scope.current.ingredients = [];
 
     $scope.current.recipe = [{type: "placeholder"}];
-	
 	$scope.toggle('context');
   }
   
   $scope.toggle = function(type){
+	  $scope.current.type = type;
 	  if(type == 'context'){
 		  $scope.action.recipe = $scope.current.recipe;
 		  $scope.current.ingredients = contextIngredients;
@@ -26,8 +26,6 @@ ifctt.controller('ContextCtrl', function($scope, $rootScope, $http, contextIngre
 		  $scope.context.recipe = $scope.current.recipe;
 		  $scope.current.ingredients = actionIngredients;
 		  $scope.current.recipe = $scope.action.recipe;
-	  }else{
-		  console.log("checfoi foi nada");
 	  }
   }
   
