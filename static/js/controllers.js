@@ -76,13 +76,25 @@ ifctt.controller('ContextCtrl', function($scope, $rootScope, $http, contextIngre
   $scope.save = function(){
 	if(!$scope.saving){
 		$scope.saving = true;
-	    $http.post('/recipe', {"context": $scope.context.recipe, "action": $scope.action.recipe}).then(function(){
+	    $http.post('/recipe', {"context": $scope.consolidateRecipe($scope.context.recipe), "action": $scope.consolidateRecipe($scope.action.recipe)}).then(function(){
 			console.log("success")
 			$scope.init();
 			$scope.saving = false;
 		}, function(){console.log("error"); $scope.saving = false;});
 	}
 	
+  }
+  
+  $scope.consolidateRecipe = function(recipe){
+	  var answer = [];
+	  for(var i=0; i<recipe.length; i++){
+		  var recipeItem = recipe[i];
+		  if(recipeItem.type != "placeholder"){
+			answer.push({"id": recipeItem.id, "category": recipeItem.option.categories[recipeItem.option.now.category], "value": recipeItem.option.now.value});
+		  }
+		  
+	  }
+	  return answer;
   }
 
 });
