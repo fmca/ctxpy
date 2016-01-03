@@ -80,7 +80,7 @@ ifctt.constant("contextIngredients", [{
     color: '#3498db',
     icon: 'glyphicon-calendar'
   }, {
-    name: "Enviar Mensagem",
+    name: "Enviar Mensagem WhatsApp",
     option: {
       name: "Enviar para",
       categories: ["número: ", "contato: "],
@@ -91,5 +91,5 @@ ifctt.constant("contextIngredients", [{
       }
     },
     color: '#f39c12',
-    icon: 'glyphicon-time'
+    icon: 'glyphicon-envelope'
   }]);

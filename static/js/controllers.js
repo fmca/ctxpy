@@ -1,4 +1,4 @@
-ifctt.controller('ContextCtrl', function($scope, $rootScope, contextIngredients, actionIngredients) {
+ifctt.controller('ContextCtrl', function($scope, $rootScope, $http, contextIngredients, actionIngredients) {
 
   $scope.context = {}
   $scope.action = {}
@@ -67,6 +67,11 @@ ifctt.controller('ContextCtrl', function($scope, $rootScope, contextIngredients,
   $scope.deleteItem = function(index) {
     $scope.lists.recipe.splice(index, 1);
     $scope.reorganize();
+  }
+  
+  
+  $scope.save = function(){
+	$http.post('/recipe', {"recipe": $scope.context.recipe}).then(function(){console.log("success")}, function(){console.log("error")});
   }
 
 })
