@@ -1,16 +1,21 @@
 ifctt.controller('ContextCtrl', function($scope, $rootScope, $http, contextIngredients, actionIngredients) {
 
-  $scope.context = {}
-  $scope.action = {}
-  $scope.context.recipe = [{type: "placeholder"}];
-  $scope.action.recipe = [{type: "placeholder"}];
+  $scope.init = function(){
+	$scope.context = {}
+    $scope.action = {}
+    $scope.context.recipe = [{type: "placeholder"}];
+    $scope.action.recipe = [{type: "placeholder"}];
   
-  $scope.modal = {}
-  $scope.modal.item = {}
-  $scope.current = {};
-  $scope.current.ingredients = [];
+    $scope.modal = {}
+    $scope.modal.item = {}
+    $scope.current = {};
+    $scope.current.name = "Sem título";
+    $scope.current.ingredients = [];
 
-  $scope.current.recipe = [{type: "placeholder"}];
+    $scope.current.recipe = [{type: "placeholder"}];
+	
+	$scope.toggle('context');
+  }
   
   $scope.toggle = function(type){
 	  if(type == 'context'){
@@ -26,7 +31,7 @@ ifctt.controller('ContextCtrl', function($scope, $rootScope, $http, contextIngre
 	  }
   }
   
-  $scope.toggle('context');
+  $scope.init();
 
   $scope.sortableOptions = {
     allowDuplicates: false,
@@ -71,7 +76,15 @@ ifctt.controller('ContextCtrl', function($scope, $rootScope, $http, contextIngre
   
   
   $scope.save = function(){
-	$http.post('/recipe', {"recipe": $scope.context.recipe}).then(function(){console.log("success")}, function(){console.log("error")});
+	if(!$scope.saving){
+		$scope.saving = true;
+	    $http.post('/recipe', {"context": $scope.context.recipe, "action": $scope.action.recipe}).then(function(){
+			console.log("success")
+			$scope.init();
+			$scope.saving = false;
+		}, function(){console.log("error"); $scope.saving = false;});
+	}
+	
   }
 
-})
+});

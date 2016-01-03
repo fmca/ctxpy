@@ -1,5 +1,6 @@
 ifctt.constant("contextIngredients", [{
     name: "Ligação",
+	id: "ciCall",
     option: {
       name: "Número",
       categories: ["=", "!="],
@@ -13,6 +14,7 @@ ifctt.constant("contextIngredients", [{
     icon: 'glyphicon-earphone'
   }, {
     name: "Agenda",
+	id: "ciCalendar",
     option: {
       name: "Estiver",
       categories: ["ocupado", "livre"],
@@ -25,6 +27,7 @@ ifctt.constant("contextIngredients", [{
     icon: 'glyphicon-calendar'
   }, {
     name: "Horário",
+	id: "ciTime",
     option: {
       name: "Agora",
       categories: ["=", ">", "<"],
@@ -38,6 +41,7 @@ ifctt.constant("contextIngredients", [{
     icon: 'glyphicon-time'
   }, {
     name: "Localização",
+	id: "ciLocalization",
     option: {
       name: "Estiver",
       categories: ["em casa", "fora de casa"],
@@ -56,6 +60,7 @@ ifctt.constant("contextIngredients", [{
   
   ifctt.constant("actionIngredients", [{
     name: "Ligar para",
+	id: "aiCall",
     option: {
       name: "Número",
       categories: ["="],
@@ -69,6 +74,7 @@ ifctt.constant("contextIngredients", [{
     icon: 'glyphicon-earphone'
   }, {
     name: "Agendar",
+	id: "aiCalendar",
     option: {
       name: "Marcar ",
       categories: ["ocupado", "livre"],
@@ -81,6 +87,7 @@ ifctt.constant("contextIngredients", [{
     icon: 'glyphicon-calendar'
   }, {
     name: "Enviar Mensagem WhatsApp",
+	id: "aiWhatsApp",
     option: {
       name: "Enviar para",
       categories: ["número: ", "contato: "],

@@ -1,10 +1,14 @@
 from bottle import route, post, static_file, request, run
 from tinydb import TinyDB
+from time import sleep
 
 @post('/recipe')
 def newRecipe():
-	recipe = request.json.get("recipe");
-	print(recipe);
+	contextRecipe = request.json.get("context");
+	actionRecipe = request.json.get("action");
+	sleep(2);
+	print(contextRecipe);
+	print(actionRecipe);
 	
 # Static files
 @route('/<filepath:path>')
