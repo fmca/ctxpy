@@ -14,6 +14,7 @@
   <script src="js/lib/bootstrap.min.js" charset="utf-8"></script>
   <script src="js/lib/ng-sortable.min.js" charset="utf-8"></script>
   <script src="js/modules.js" charset="utf-8"></script>
+  <script src="js/constants.js" charset="iso-88591-1"></script>
   <script src="js/controllers.js" charset="utf-8"></script>
 </head>
 
@@ -54,8 +55,8 @@
 
 
     <ul class="nav nav-pills" role="tablist" id="myTabs">
-      <li role="presentation" class="active"><a href="#recipe" aria-controls="home" role="tab" data-toggle="tab">Contexto</a></li>
-      <li role="presentation"><a href="#action" aria-controls="profile" role="tab" data-toggle="tab">Ações</a></li>
+      <li role="presentation" class="active"><a ng-click="toggle('context')" href="#recipe" aria-controls="home" role="tab" data-toggle="tab">Contexto</a></li>
+      <li role="presentation"><a ng-click="toggle('action')" href="#action" aria-controls="profile" role="tab" data-toggle="tab">Ações</a></li>
     </ul>
 
 
@@ -68,8 +69,8 @@
                   Receita
                 </div>
                 <div class="panel-body">
-                  <div class="sortable-row workspace" as-sortable="sortableOptions" data-ng-model="lists.recipe">
-                    <div ng-class="{'item-placeholder no-drag': item.type == 'placeholder'}" ng-style="{'background-color': item.color}" ng-repeat="item in lists.recipe" as-sortable-item>
+                  <div class="sortable-row workspace" as-sortable="sortableOptions" data-ng-model="current.recipe">
+                    <div ng-class="{'item-placeholder no-drag': item.type == 'placeholder'}" ng-style="{'background-color': item.color}" ng-repeat="item in current.recipe" as-sortable-item>
                       <div class="square" ng-if="item.type != 'placeholder'">
 
                         <div as-sortable-item-handle>
@@ -104,8 +105,8 @@
                   Ingredientes
                 </div>
                 <div class="panel-body">
-                  <div class="sortable-row" as-sortable="sortableCloneOptions" data-ng-model="lists.context">
-                    <div ng-repeat="item in lists.context" ng-style="{'background-color': item.color}" as-sortable-item>
+                  <div class="sortable-row" as-sortable="sortableCloneOptions" data-ng-model="current.ingredients">
+                    <div ng-repeat="item in current.ingredients" ng-style="{'background-color': item.color}" as-sortable-item>
                       <div class="square">
                         <span data-no-drag class="sortable-icon pull-left" ng-click="removeItem($index)">
                           <span class="glyphicon" ng-class="item.icon"></span>

@@ -1,63 +1,32 @@
-ifctt.controller('ContextCtrl', function($scope, $rootScope) {
+ifctt.controller('ContextCtrl', function($scope, $rootScope, contextIngredients, actionIngredients) {
 
+  $scope.context = {}
+  $scope.action = {}
+  $scope.context.recipe = [{type: "placeholder"}];
+  $scope.action.recipe = [{type: "placeholder"}];
+  
   $scope.modal = {}
   $scope.modal.item = {}
-  $scope.lists = {};
-  $scope.lists.context = [{
-    name: "Ligação",
-    option: {
-      name: "Número",
-      categories: ["=", "!="],
-      value: true,
-      now: {
-        category: 0,
-        value: "144"
-      }
-    },
-    color: '#2ecc71',
-    icon: 'glyphicon-earphone'
-  }, {
-    name: "Agenda",
-    option: {
-      name: "Estiver",
-      categories: ["ocupado", "livre"],
-      value: false,
-      now: {
-        category: 0
-      }
-    },
-    color: '#3498db',
-    icon: 'glyphicon-calendar'
-  }, {
-    name: "Horário",
-    option: {
-      name: "Agora",
-      categories: ["=", ">", "<"],
-      value: true,
-      now: {
-        category: 0,
-        value: "08:00"
-      }
-    },
-    color: '#f39c12',
-    icon: 'glyphicon-time'
-  }, {
-    name: "Localização",
-    option: {
-      name: "Estiver",
-      categories: ["em casa", "fora de casa"],
-      value: false,
-      now: {
-        category: 0
-      }
-    },
-    color: '#e74c3c',
-    icon: 'glyphicon-map-marker'
-  }];
+  $scope.current = {};
+  $scope.current.ingredients = [];
 
-  $scope.lists.recipe = [{
-    type: "placeholder"
-  }];
+  $scope.current.recipe = [{type: "placeholder"}];
+  
+  $scope.toggle = function(type){
+	  if(type == 'context'){
+		  $scope.action.recipe = $scope.current.recipe;
+		  $scope.current.ingredients = contextIngredients;
+		  $scope.current.recipe = $scope.context.recipe;
+	  }else if(type == 'action'){
+		  $scope.context.recipe = $scope.current.recipe;
+		  $scope.current.ingredients = actionIngredients;
+		  $scope.current.recipe = $scope.action.recipe;
+	  }else{
+		  console.log("checfoi foi nada");
+	  }
+  }
+  
+  $scope.toggle('context');
 
   $scope.sortableOptions = {
     allowDuplicates: false,
@@ -77,7 +46,7 @@ ifctt.controller('ContextCtrl', function($scope, $rootScope) {
   };
 
   $scope.reorganize = function() {
-    var copy = $scope.lists.recipe;
+    var copy = $scope.current.recipe;
     var newList = [];
     for (var i in copy) {
       var it = copy[i];
@@ -91,7 +60,7 @@ ifctt.controller('ContextCtrl', function($scope, $rootScope) {
     if (newList.length == 0) newList.push({
       type: "placeholder"
     });
-    $scope.lists.recipe = newList;
+    $scope.current.recipe = newList;
   }
 
 
