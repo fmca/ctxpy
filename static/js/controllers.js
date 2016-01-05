@@ -76,7 +76,7 @@ ifctt.controller('ContextCtrl', function($scope, $rootScope, $http, contextIngre
   $scope.save = function(){
 	if(!$scope.saving){
 		$scope.saving = true;
-	    $http.post('/recipe', {"context": $scope.consolidateRecipe($scope.context.recipe), "action": $scope.consolidateRecipe($scope.action.recipe)}).then(function(){
+	    $http.post('/recipe', {"name": $scope.current.name, "context": $scope.consolidateRecipe($scope.context.recipe), "action": $scope.consolidateRecipe($scope.action.recipe)}).then(function(){
 			console.log("success")
 			$scope.init();
 			$scope.saving = false;
