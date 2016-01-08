@@ -17,26 +17,26 @@ class Observable:
 		for observer in self._observers:
 			observer.update(event)
 		
-class Widget(Observer, Observable):
-	def __init__(self, type, fn_change_handler):
-		self._change_handler = fn_change_handler
-	def update(self, obj):
-		self._change_handler(Observable._observers)
+class Widget(Observable, Observer):
+	def __init__(self, type, *generators):
+		super(Widget, self).__init__()
+		self.generators = generators
+		for generator in generators:
+			generator.register(self)
 			
 from threading import Timer
 class Generator(Observable):
-	def __init__(self, widget, type, fn_generate):
-		Observable.__init__(self)
-		self._property = None
-		self._generate = fn_generate
+	def __init__(self, type):
+		super().__init__()
+		self.property = None
 		self._type = type
+	def generate(self):
+		raise NotImplementedError("Not implemented")
 	def start(self, delay):
-		
-		new_property = self._generate()
-		print(new_property)
-		if(new_property != self._property):
-			self._property = new_property
+		new_property = self.generate()
+		if new_property != self.property:
+			self.property = new_property
 			event = Event(self._type, property=new_property)
-			self.notify(event)
+			super().notify(event)
 		timerTask = Timer(delay, lambda: self.start(delay), ())
 		timerTask.start();
