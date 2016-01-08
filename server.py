@@ -27,16 +27,23 @@ def server_static(filepath):
 def home():
     return static_file("index.html", root='./static')
 	
+from ctx_toolkit import Generator, Widget
+import os
+
+def time_handler(generators):
+	print("handler")
+	for gen in generators:
+		print(gen._property)
 	
+wgt_time = Widget(type, time_handler)
+
+def time_generator():
+	from datetime import datetime
+	now = datetime.now().time()
+	return str(now.hour )+ ":" + str(now.minute) + ":" + str(now.second)
+gen_time = Generator(wgt_time, "time", time_generator)
+
+gen_time.start(1)
+
 	
-class Widget:
-	def register():
-		pass
-	
-class Generator:
-	pass
-	
-class Interpreter:
-	pass
-	
-run(host='localhost', port=8080, debug=True)
+#run(host='localhost', port=8080, debug=True)
