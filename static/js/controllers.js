@@ -1,3 +1,8 @@
+ifctt.controller('NavCtrl', function($scope, $rootScope){
+	$scope.menu = 'home' //home, widgets, recipes
+	
+})
+
 ifctt.controller('ContextCtrl', function($scope, $rootScope, $http, contextIngredients, actionIngredients) {
 
   $scope.init = function(){

@@ -5,6 +5,7 @@ from json import dumps
 
 db = TinyDB("db.json");
 recipesTable = db.table("recipes");
+widgets = []
 
 @get('/recipe')
 def getRecipes():
@@ -27,7 +28,24 @@ def server_static(filepath):
 def home():
     return static_file("index.html", root='./static')
 	
+@get('/widgets')
+def widgets():
+	response.content_type = "application/json"
+	answer = dict()
+	for widget in widgets:
+		answer[widget.type] = str(widget.status)
+	return dumps(answer, ensure_ascii=False).encode("iso-8859-1")
+	
 import ctx
 
+gen_time = ctx.TimeGerator()
+wgt_time = ctx.TimeWidget(gen_time)
+gen_calendar = ctx.CalendarGenerator("tgkehbl0fecu2htgfai7qdkh7k@group.calendar.google.com")
+wgt_agenda = ctx.AgendaWidget(gen_time, gen_calendar)
+
+widgets = [wgt_time, wgt_agenda]
+
+gen_calendar.start(5)
+gen_time.start(5)
 	
-#run(host='localhost', port=8080, debug=True)
+run(host='localhost', port=8080, debug=True)

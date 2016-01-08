@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html  ng-app="ifctt" ng-controller="NavCtrl">
 
 <head>
   <meta charset="utf-8">
@@ -20,7 +20,7 @@
   <script src="js/controllers.js" charset="utf-8"></script>
 </head>
 
-<body ng-app="ifctt" ng-controller="ContextCtrl">
+<body ng-controller="ContextCtrl">
 
   <nav class="navbar navbar-default" role="navigation">
     <div class="container-fluid">
@@ -36,10 +36,10 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="navbar">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="#" ng-click="init()">Nova Receita</a></li>
-          <li>
-            <a href="#" data-toggle="modal" data-target="#saveConfirmation"><span ng-if="!saving">Salvar</span><span ng-if="saving">Salvando...</span></a>
-          </li>
+          <li ng-class="{active: menu=='home'}"><a href="#" ng-click="menu='home'; init();">Nova Receita</a></li>
+		  <li ng-class="{active: menu=='widgets'}"><a href="#" ng-click="menu='widgets'">Widgets</a></li>
+		  <li ng-class="{active: menu=='recipes'}"><a href="#" ng-click="menu='recipes'">Receitas</a></li>
+          
 
         </ul>
         <ul class="nav navbar-nav navbar-right">
@@ -54,14 +54,12 @@
     <!-- /.container-fluid -->
   </nav>
   <div class="container">
-
-
-    <ul class="nav nav-pills" role="tablist" id="myTabs">
+	
+	<div id="home" ng-if="menu == 'home'" >
+    <ul class="nav nav-pills" role="tablist" id="myTabs" style="width: 100%">
       <li role="presentation" ng-class="{active: current.type == 'context'}"><a ng-click="toggle('context')" href="#recipe" aria-controls="home" role="tab" data-toggle="tab">Contexto</a></li>
       <li role="presentation" ng-class="{active: current.type == 'action'}"><a ng-click="toggle('action')" href="#action" aria-controls="profile" role="tab" data-toggle="tab">Ações</a></li>
     </ul>
-
-
 
         <div class="row">
           <div id="sortable-container" class="col-md-12">
@@ -98,6 +96,9 @@
                   </div>
                 </div>
               </div>
+			  	  <div ng-if="menu=='home'" class="pull-right">
+						<button data-toggle="modal" data-target="#saveConfirmation" class="btn btn-primary" style="margin-top: 5px"><span ng-if="!saving">Salvar Receita</span><span ng-if="saving">Salvando...</span></button>
+				  </div>
 
             </div>
 
@@ -127,6 +128,7 @@
 
     <div ng-include="'views/modal_edit.html'"></div>
   </div>
+  </div>
   
   
   <div id="saveConfirmation" class="modal fade" role="dialog">
@@ -148,6 +150,7 @@
       </div>
     </div>
 
+  </div>
   </div>
 
 

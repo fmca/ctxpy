@@ -5,14 +5,14 @@ from time import mktime
 
 class TimeWidget(Widget):
 	def __init__(self, *generators):
-		super(TimeWidget, self).__init__("time", *generators)
+		super(TimeWidget, self).__init__("Time", *generators)
 	def update(self, event):
-		now = self.getproperty("time")
-		print(str(now.hour )+ ":" + str(now.minute) + ":" + str(now.second))
+		now = self.getproperty("time").time()
+		self.status = now
 			
 class AgendaWidget(Widget):
 	def __init__(self, *generators):
-		super(AgendaWidget, self).__init__("agenda", *generators)
+		super(AgendaWidget, self).__init__("Agenda", *generators)
 	def update(self, event):
 		now = self.getproperty("time")
 		events = self.getproperty("calendar")
@@ -21,7 +21,7 @@ class AgendaWidget(Widget):
 			for event in events:
 				if(now >= event['start'] and now < event['end']):
 					occupied = True
-		print("occupied: " + str(occupied))
+		self.status = occupied
 		
 class TimeGerator(Generator):
 	def __init__(self):
@@ -56,14 +56,3 @@ class CalendarGenerator(Generator):
 					createEvent(startstr[:-1], endstr[:-1])
 			events.append(event)
 		return events
-		
-		
-gen_time = TimeGerator()
-wgt_time = TimeWidget(gen_time)
-
-
-gen_calendar = CalendarGenerator("tgkehbl0fecu2htgfai7qdkh7k@group.calendar.google.com")
-wgt_agenda = AgendaWidget(gen_time, gen_calendar)
-
-gen_calendar.start(5)
-gen_time.start(5)
