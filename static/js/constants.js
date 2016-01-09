@@ -90,7 +90,7 @@ ifctt.constant("contextIngredients", [{
 	id: "aiWhatsApp",
     option: {
       name: "Enviar para",
-      categories: ["número: ", "contato: "],
+      categories: ["numero", "contato"],
       value: true,
       now: {
         category: 1,

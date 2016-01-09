@@ -1,8 +1,37 @@
 ifctt.controller('NavCtrl', function($scope, $rootScope){
-	$scope.menu = 'home' //home, widgets, recipes
+	$scope.menu = {
+		current: 'home' //home, widgets, recipes
+	}
+	$rootScope.getMenu = function(){
+		return $scope.menu.current;
+	}
+});
+ifctt.controller('WidgetCtrl', function($scope, $rootScope, $http, $timeout){
+	$scope.widgets = []	
+	$scope.getWidgets = function(){
+		$http.get('/widgets', {ignoreLoadingBar: true}).then(function(response){
+			$scope.widgets = response.data;
+			$timeout($scope.getWidgets, 1500);
+		}, function(){});	
+		
+    };
 	
-})
-
+	$scope.getWidgets();
+});
+ifctt.controller('RecipesCtrl', function($scope, $http, $timeout){
+	$scope.recipes = []
+	$scope.getRecipes = function(){
+		$http.get('/recipe', {ignoreLoadingBar: true}).then(function(response){
+			$scope.recipes = response.data;
+			$timeout($scope.getRecipes, 1500);
+		}, function(){});	
+    };
+	
+	$scope.remove = function(title){
+		$http.delete('/recipe/'+title).then(function(){});
+	}
+	$scope.getRecipes();
+});
 ifctt.controller('ContextCtrl', function($scope, $rootScope, $http, contextIngredients, actionIngredients) {
 
   $scope.init = function(){
@@ -81,6 +110,11 @@ ifctt.controller('ContextCtrl', function($scope, $rootScope, $http, contextIngre
   $scope.save = function(){
 	if(!$scope.saving){
 		$scope.saving = true;
+		if($scope.current.type == 'action'){
+			$scope.action.recipe = $scope.current.recipe;
+		}else{
+			$scope.context.recipe = $scope.current.recipe;
+		}
 	    $http.post('/recipe', {"name": $scope.current.name, "context": $scope.consolidateRecipe($scope.context.recipe), "action": $scope.consolidateRecipe($scope.action.recipe)}).then(function(){
 			console.log("success")
 			$scope.init();
@@ -91,6 +125,7 @@ ifctt.controller('ContextCtrl', function($scope, $rootScope, $http, contextIngre
   }
   
   $scope.consolidateRecipe = function(recipe){
+	  console.log(recipe)
 	  var answer = [];
 	  for(var i=0; i<recipe.length; i++){
 		  var recipeItem = recipe[i];

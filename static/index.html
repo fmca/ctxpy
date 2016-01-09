@@ -36,9 +36,9 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="navbar">
         <ul class="nav navbar-nav">
-          <li ng-class="{active: menu=='home'}"><a href="#" ng-click="menu='home'; init();">Nova Receita</a></li>
-		  <li ng-class="{active: menu=='widgets'}"><a href="#" ng-click="menu='widgets'">Widgets</a></li>
-		  <li ng-class="{active: menu=='recipes'}"><a href="#" ng-click="menu='recipes'">Receitas</a></li>
+          <li ng-class="{active: menu.current=='home'}"><a href="#" ng-click="menu.current='home'; init();">Nova Receita</a></li>
+		  <li ng-class="{active: menu.current=='widgets'}"><a href="#" ng-click="menu.current='widgets'">Widgets</a></li>
+		  <li ng-class="{active: menu.current=='recipes'}"><a href="#" ng-click="menu.current='recipes'">Receitas</a></li>
           
 
         </ul>
@@ -55,7 +55,7 @@
   </nav>
   <div class="container">
 	
-	<div id="home" ng-if="menu == 'home'" >
+	<div id="home" ng-if="menu.current == 'home'" >
     <ul class="nav nav-pills" role="tablist" id="myTabs" style="width: 100%">
       <li role="presentation" ng-class="{active: current.type == 'context'}"><a ng-click="toggle('context')" href="#recipe" aria-controls="home" role="tab" data-toggle="tab">Contexto</a></li>
       <li role="presentation" ng-class="{active: current.type == 'action'}"><a ng-click="toggle('action')" href="#action" aria-controls="profile" role="tab" data-toggle="tab">Ações</a></li>
@@ -96,7 +96,7 @@
                   </div>
                 </div>
               </div>
-			  	  <div ng-if="menu=='home'" class="pull-right">
+			  	  <div ng-if="menu.current=='home'" class="pull-right">
 						<button data-toggle="modal" data-target="#saveConfirmation" class="btn btn-primary" style="margin-top: 5px"><span ng-if="!saving">Salvar Receita</span><span ng-if="saving">Salvando...</span></button>
 				  </div>
 
@@ -128,8 +128,46 @@
 
     <div ng-include="'views/modal_edit.html'"></div>
   </div>
+  
+    <div id="widgets" ng-if="menu.current=='widgets'" ng-controller="WidgetCtrl">
+		<ul class="list-group">
+		  <li class="list-group-item" ng-repeat="widget in widgets">
+			<span class="badge">{{widget.status}}</span>
+			{{widget.type}}
+		  </li>
+		</ul>
+	</div>
+	
+	<div id="recipes" ng-if="menu.current=='recipes'" ng-controller="RecipesCtrl">
+		<div class="panel panel-primary" ng-repeat="recipe in recipes">
+			<div class="panel-heading">
+			{{recipe.name}}
+			<a href="#" style="color: white" ng-click="remove(recipe.name)">
+			 <span class="glyphicon glyphicon-trash pull-right">
+			  </span>
+			  </a>
+			</div>
+			<div class="panel-body">
+			<ul class="list-group col-md-5">
+			  <li class="list-group-item" ng-repeat="ctx in recipe.context">
+				<span class="badge">{{ctx.category}} {{ctx.value}}</span>
+				<span>{{ctx.id}}</span>
+			  </li>
+			</ul>
+			
+			<ul class="list-group col-md-5">
+			  <li class="list-group-item" ng-repeat="act in recipe.action ">
+				<span class="badge">{{act.category}} {{act.value}}</span>
+				<span>{{act.id}}</span>
+			  </li>
+			</ul>
+			</div>
+		</div>
+		
+	</div>
   </div>
   
+
   
   <div id="saveConfirmation" class="modal fade" role="dialog">
   <div class="modal-dialog">

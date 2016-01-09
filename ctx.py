@@ -5,14 +5,14 @@ from time import mktime
 
 class TimeWidget(Widget):
 	def __init__(self, *generators):
-		super(TimeWidget, self).__init__("Time", *generators)
+		super(TimeWidget, self).__init__("Relogio", *generators)
 	def update(self, event):
 		now = self.getproperty("time").time()
 		self.status = now
 			
 class AgendaWidget(Widget):
 	def __init__(self, *generators):
-		super(AgendaWidget, self).__init__("Agenda", *generators)
+		super(AgendaWidget, self).__init__("Ocupado", *generators)
 	def update(self, event):
 		now = self.getproperty("time")
 		events = self.getproperty("calendar")
