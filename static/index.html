@@ -129,7 +129,7 @@
     <div ng-include="'views/modal_edit.html'"></div>
   </div>
   
-    <div id="widgets" ng-if="menu.current=='widgets'" ng-controller="WidgetCtrl">
+    <div id="widgets" ng-show="menu.current=='widgets'" ng-controller="WidgetCtrl">
 		<ul class="list-group">
 		  <li class="list-group-item" ng-repeat="widget in widgets">
 			<span class="badge">{{widget.status}}</span>
@@ -138,7 +138,7 @@
 		</ul>
 	</div>
 	
-	<div id="recipes" ng-if="menu.current=='recipes'" ng-controller="RecipesCtrl">
+	<div id="recipes" ng-show="menu.current=='recipes'" ng-controller="RecipesCtrl">
 		<div class="panel panel-primary" ng-repeat="recipe in recipes">
 			<div class="panel-heading">
 			{{recipe.name}}

@@ -1,6 +1,6 @@
 ifctt.constant("contextIngredients", [{
     name: "Ligação",
-	id: "ciCall",
+	id: "Ligacao",
     option: {
       name: "Número",
       categories: ["=", "!="],
@@ -14,7 +14,7 @@ ifctt.constant("contextIngredients", [{
     icon: 'glyphicon-earphone'
   }, {
     name: "Agenda",
-	id: "ciCalendar",
+	id: "Ocupado",
     option: {
       name: "Estiver",
       categories: ["ocupado", "livre"],
@@ -27,7 +27,7 @@ ifctt.constant("contextIngredients", [{
     icon: 'glyphicon-calendar'
   }, {
     name: "Horário",
-	id: "ciTime",
+	id: "Horario",
     option: {
       name: "Agora",
       categories: ["=", ">", "<"],
@@ -41,7 +41,7 @@ ifctt.constant("contextIngredients", [{
     icon: 'glyphicon-time'
   }, {
     name: "Localização",
-	id: "ciLocalization",
+	id: "Localizacao",
     option: {
       name: "Estiver",
       categories: ["em casa", "fora de casa"],
@@ -60,7 +60,7 @@ ifctt.constant("contextIngredients", [{
   
   ifctt.constant("actionIngredients", [{
     name: "Ligar para",
-	id: "aiCall",
+	id: "Call",
     option: {
       name: "Número",
       categories: ["="],

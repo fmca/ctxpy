@@ -102,7 +102,7 @@ ifctt.controller('ContextCtrl', function($scope, $rootScope, $http, contextIngre
 
 
   $scope.deleteItem = function(index) {
-    $scope.lists.recipe.splice(index, 1);
+    $scope.current.recipe.splice(index, 1);
     $scope.reorganize();
   }
   

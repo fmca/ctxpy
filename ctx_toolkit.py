@@ -1,3 +1,5 @@
+from threading import Timer
+
 class Event:
 	def __init__(self, type, **kwargs):
 		self.type = type
@@ -31,7 +33,6 @@ class Widget(Observable, Observer):
 				return generator.property
 	
 			
-from threading import Timer
 class Generator(Observable):
 	def __init__(self, type):
 		super().__init__()

@@ -5,7 +5,7 @@ from time import mktime
 
 class TimeWidget(Widget):
 	def __init__(self, *generators):
-		super(TimeWidget, self).__init__("Relogio", *generators)
+		super(TimeWidget, self).__init__("Horario", *generators)
 	def update(self, event):
 		now = self.getproperty("time").time()
 		self.status = now
