@@ -82,7 +82,19 @@ class Interpreter:
 		else:
 			return time == ctx_time
 
-		
+from uiautomator import device as d
+from subprocess import call
+
+class Actuator:
+    def doAgenda(self, action):
+        pass
+    def doFacebook(self, action):
+        d.screen.on()
+        d.press.home()
+        call(["adb", "shell", "am", "start", "com.facebook.orca/.auth.StartScreenActivity"])
+        d(resourceId="com.facebook.orca:id/action_search").click()
+        
+        
 
 gen_time = ctx.TimeGerator()
 wgt_time = ctx.TimeWidget(gen_time)

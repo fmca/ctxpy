@@ -74,9 +74,9 @@ ifctt.constant("contextIngredients", [{
     icon: 'glyphicon-earphone'
   }, {
     name: "Agendar",
-	id: "aiCalendar",
+	id: "Calendar",
     option: {
-      name: "Marcar ",
+      name: "Marcar",
       categories: ["ocupado", "livre"],
       value: false,
       now: {
@@ -86,8 +86,8 @@ ifctt.constant("contextIngredients", [{
     color: '#3498db',
     icon: 'glyphicon-calendar'
   }, {
-    name: "Enviar Mensagem WhatsApp",
-	id: "aiWhatsApp",
+    name: "Enviar Mensagem Facebook",
+	id: "Facebook",
     option: {
       name: "Enviar para",
       categories: ["numero", "contato"],
