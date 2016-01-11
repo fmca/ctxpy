@@ -2,7 +2,7 @@
 <html  ng-app="ifctt" ng-controller="NavCtrl">
 
 <head>
-  <meta charset="utf-8">
+  <meta charset="iso-88591-1">
   <title>IFCTT</title>
   <link rel="stylesheet" href="css/lib/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
   <link rel="stylesheet" href="css/lib/ng-sortable.min.css" media="screen" title="no title" charset="utf-8">
@@ -15,6 +15,7 @@
   <script src="js/lib/bootstrap.min.js" charset="utf-8"></script>
   <script src="js/lib/ng-sortable.min.js" charset="utf-8"></script>
   <script type='text/javascript' src='js/lib/loading-bar.min.js'></script>
+  <script src="js/lib/angular-sanitize.js"></script>
   <script src="js/modules.js" charset="utf-8"></script>
   <script src="js/constants.js" charset="iso-88591-1"></script>
   <script src="js/controllers.js" charset="utf-8"></script>
@@ -56,11 +57,22 @@
   <div class="container">
 	
 	<div id="home" ng-if="menu.current == 'home'" >
+    <div class="panel panel-default" ng-show="current.type == 'action' && (context.recipe.length >1 || action.recipe.length >1)">
+        <div class="panel-heading">
+            Variáveis extras
+        </div>
+        <div class="panel-body">  
+            <ul class="nav nav-pills" role="tablist" id="myTabs" style="width: 100%; list-style-type:disc">
+                  <li role="presentation" ng-repeat="ingredient in context.recipe"><span ng-repeat="variable in ingredient.option.variables" class="label label-success">{{variable.name}}</span></li>
+                  <li role="presentation" ng-repeat="ingredient in action.recipe"><span ng-repeat="variable in ingredient.option.variables"><span class="label label-primary">{{variable.name}}</span> = <span>{{variable.default}}</span></span></li>
+            </ul>
+        </div>
+    </div>
+
     <ul class="nav nav-pills" role="tablist" id="myTabs" style="width: 100%">
       <li role="presentation" ng-class="{active: current.type == 'context'}"><a ng-click="toggle('context')" href="#recipe" aria-controls="home" role="tab" data-toggle="tab">Contexto</a></li>
       <li role="presentation" ng-class="{active: current.type == 'action'}"><a ng-click="toggle('action')" href="#action" aria-controls="profile" role="tab" data-toggle="tab">Ações</a></li>
     </ul>
-
         <div class="row">
           <div id="sortable-container" class="col-md-12">
             <div class="col-md-10 col-lg-10 row">
@@ -74,7 +86,7 @@
                       <div class="square" ng-if="item.type != 'placeholder'">
 
                         <div as-sortable-item-handle>
-                          <span>{{item.option.name}} {{item.option.categories[item.option.now.category]}} {{item.option.now.value}}</span>
+                          <span>{{item.option.name}} {{item.option.categories[item.option.now.category]}}</span><span ng-bind-html="toVariableStr(item.option.now.value)"></span>
                         </div>
                         <div>
                           <a data-no-drag class="sortable-option pull-right btn btn-xs" ng-click="deleteItem($index)">

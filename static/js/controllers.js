@@ -9,22 +9,33 @@ ifctt.controller('NavCtrl', function($scope, $rootScope){
 ifctt.controller('WidgetCtrl', function($scope, $rootScope, $http, $timeout){
 	$scope.widgets = []	
 	$scope.getWidgets = function(){
-		$http.get('/widgets', {ignoreLoadingBar: true}).then(function(response){
-			$scope.widgets = response.data;
+		if($rootScope.getMenu() == 'widgets'){
+				$http.get('/widgets').then(function(response){
+					$scope.widgets = response.data;
+					$timeout($scope.getWidgets, 1500);
+				}, function(){$timeout($scope.getWidgets, 1500);});	
+		}else{
 			$timeout($scope.getWidgets, 1500);
-		}, function(){});	
+		}
+	
+		
 		
     };
 	
 	$scope.getWidgets();
 });
-ifctt.controller('RecipesCtrl', function($scope, $http, $timeout){
+ifctt.controller('RecipesCtrl', function($scope, $rootScope, $http, $timeout){
 	$scope.recipes = []
 	$scope.getRecipes = function(){
-		$http.get('/recipe', {ignoreLoadingBar: true}).then(function(response){
-			$scope.recipes = response.data;
+		if($rootScope.getMenu() == 'recipes'){
+			$http.get('/recipe').then(function(response){
+				$scope.recipes = response.data;
+				$timeout($scope.getRecipes, 1500);
+			}, function(){$timeout($scope.getWidgets, 1500);});	
+		}else{
 			$timeout($scope.getRecipes, 1500);
-		}, function(){});	
+		}
+		
     };
 	
 	$scope.remove = function(title){
@@ -98,6 +109,11 @@ ifctt.controller('ContextCtrl', function($scope, $rootScope, $http, contextIngre
       type: "placeholder"
     });
     $scope.current.recipe = newList;
+    if($scope.current.type == 'action'){
+		$scope.action.recipe = $scope.current.recipe;
+	}else{
+		$scope.context.recipe = $scope.current.recipe;
+	}
   }
 
 
@@ -105,17 +121,43 @@ ifctt.controller('ContextCtrl', function($scope, $rootScope, $http, contextIngre
     $scope.current.recipe.splice(index, 1);
     $scope.reorganize();
   }
+
+  $scope.toVariableStr = function(str){
+    /*var items = $scope.action.recipe.concat($scope.context.recipe);
+     console.log(items)
+    for(var i=0; i<items.length; i++){
+        var item = items[i];
+        console.log(item.option)
+        if(item.option){
+            for(var j=0; item.option.variables.length; j++){
+                var variable = item.option.variables[j];
+                console.log(variable)
+                if(variable){
+                    console.log(variable)
+                    str = str.replace(variable.name, "<span class='label label-default'>" + variable.name + "</span>"); 
+                }
+            }
+        }
+    }*/
+    return str;
+  }
   
   
   $scope.save = function(){
 	if(!$scope.saving){
 		$scope.saving = true;
-		if($scope.current.type == 'action'){
-			$scope.action.recipe = $scope.current.recipe;
-		}else{
-			$scope.context.recipe = $scope.current.recipe;
+		var variables = []
+		var items = $scope.action.recipe;
+		for(var i=0; i<items.length; i++){
+			var item = items[i]
+			if(item.type!="placeholder"){
+				for(var j=0; j<item.option.variables.length; j++){
+					var v = item.option.variables[j]
+					variables.push({"name": v['name'], "value": v['default']})
+				}
+			}
 		}
-	    $http.post('/recipe', {"name": $scope.current.name, "context": $scope.consolidateRecipe($scope.context.recipe), "action": $scope.consolidateRecipe($scope.action.recipe)}).then(function(){
+	    $http.post('/recipe', {"name": $scope.current.name, "context": $scope.consolidateRecipe($scope.context.recipe), "action": $scope.consolidateRecipe($scope.action.recipe), "variables": variables}).then(function(){
 			console.log("success")
 			$scope.init();
 			$scope.saving = false;

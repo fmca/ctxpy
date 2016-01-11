@@ -2,17 +2,19 @@ from ctx_toolkit import Generator, Widget
 import os, urllib.request, time, json
 from datetime import datetime
 from time import mktime
+from action import Actuator
+from threading import Timer
 
 class TimeWidget(Widget):
 	def __init__(self, *generators):
-		super(TimeWidget, self).__init__("Horario", *generators)
+		super(TimeWidget, self).__init__("Horario", "$horarioAgora", *generators)
 	def update(self, event):
 		now = self.getproperty("time").time()
 		self.status = now
 			
 class AgendaWidget(Widget):
 	def __init__(self, *generators):
-		super(AgendaWidget, self).__init__("Ocupado", *generators)
+		super(AgendaWidget, self).__init__("Ocupado", None, *generators)
 	def update(self, event):
 		now = self.getproperty("time")
 		events = self.getproperty("calendar")
@@ -56,3 +58,65 @@ class CalendarGenerator(Generator):
 					createEvent(startstr[:-1], endstr[:-1])
 			events.append(event)
 		return events
+
+
+class Interpreter:
+	def __init__(self, recipesTable, widgets):
+		self.recipesTable = recipesTable;
+		self.widgets = widgets
+		self.statuses = dict()
+		self.actuator = Actuator()
+	def getwidget(self, type):
+		for widget in self.widgets:
+			if widget.type == type:
+				return widget
+	def getvariables(self):
+		variables = []
+		for w in self.widgets:
+			variables.append({"name": w.status_name, "value": str(w.status)})
+		return variables
+	def updatevariables(self, variables, recipe):
+		def replace(value):
+			for v in variables:
+				if v['name']:
+					print("replacing, " + v['name'] + " in " + value)
+					value = value.replace(v['name'], v['value'])
+			return value
+		for action in recipe['action']:
+			action['value'] = replace(action['value'])
+		for action_variable in recipe['variables']:
+			action_variable['value'] = replace(action_variable['value'])
+		return recipe
+	def interpret(self, delay):
+		recipes = self.recipesTable.all()
+		for recipe in recipes:
+			isReady = len(recipe['context']) > 0
+			for ctx in recipe['context']:
+				if ctx['id'] == 'Horario':
+					isReady = isReady and self.checkTime(ctx)
+				elif ctx['id'] == 'Ocupado':
+					isReady = isReady and self.checkAgenda(ctx)
+			if isReady and not self.statuses.get(recipe['name'], not isReady):
+				print(recipe['name'] + " is ready")
+				recipe = self.updatevariables(self.getvariables(), recipe)
+				self.actuator.executeInBackground(recipe)
+			self.statuses[recipe['name']] = isReady
+		timerTask = Timer(delay, lambda: self.interpret(delay), ())
+		timerTask.start()
+		
+	def checkAgenda(self, ctx):
+		occupied = self.getwidget("Ocupado").status
+		if ctx['category'] == 'ocupado':
+			return occupied
+		else:
+			return not occupied
+	
+	def checkTime(self, ctx):
+		time = self.getwidget("Horario").status
+		ctx_time = datetime.strptime(ctx['value'], '%H:%M').time()
+		if ctx['category'] == '>':
+			return time > ctx_time
+		elif ctx['category'] == '<':
+			return time < ctx_time
+		else:
+			return time == ctx_time

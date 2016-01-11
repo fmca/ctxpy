@@ -20,11 +20,12 @@ class Observable:
 			observer.update(event)
 		
 class Widget(Observable, Observer):
-	def __init__(self, type, *generators):
+	def __init__(self, type, status_name, *generators):
 		super(Widget, self).__init__()
 		self.type = type
 		self.generators = generators
 		self.status = None
+		self.status_name = status_name
 		for generator in generators:
 			generator.register(self)
 	def getproperty(self, type):

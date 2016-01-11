@@ -8,7 +8,10 @@ ifctt.constant("contextIngredients", [{
       now: {
         category: 0,
         value: "144"
-      }
+      },
+      variables: [
+        {"name": "$numero"}
+      ]
     },
     color: '#2ecc71',
     icon: 'glyphicon-earphone'
@@ -35,7 +38,10 @@ ifctt.constant("contextIngredients", [{
       now: {
         category: 0,
         value: "08:00"
-      }
+      },
+      variables: [
+        {"name": "$horarioAgora"}
+      ]
     },
     color: '#f39c12',
     icon: 'glyphicon-time'
@@ -81,7 +87,11 @@ ifctt.constant("contextIngredients", [{
       value: false,
       now: {
         category: 0
-      }
+      },
+      variables: [
+        {name: "$inicio", default: "12:00"},
+        {name: "$fim", default: "13:00"}
+      ]
     },
     color: '#3498db',
     icon: 'glyphicon-calendar'
@@ -95,7 +105,28 @@ ifctt.constant("contextIngredients", [{
       now: {
         category: 1,
         value: "José"
-      }
+      },
+      variables: [
+        {name: "$mensagem", default: "Ola!"},
+      ]
+    },
+    color: '#f39c12',
+    icon: 'glyphicon-envelope'
+  },{
+    name: "Enviar Email",
+	id: "Email",
+    option: {
+      name: "Enviar para",
+      categories: ["email", "contato"],
+      value: true,
+      now: {
+        category: 0,
+        value: "lipemarques6@gmail.com"
+      },
+      variables: [
+        {name: "$mensagem", default: "Ola!"},
+		{name: "$titulo", default: "Nenhum"}
+      ]
     },
     color: '#f39c12',
     icon: 'glyphicon-envelope'

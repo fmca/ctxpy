@@ -7,20 +7,30 @@
         </button>
         <h4 class="modal-title">{{modal.item.name}}</h4>
       </div>
-      <div class="modal-body">
-        <span>{{modal.item.option.name}}</span>
-        <span class="dropdown">
-          <button aria-expanded="true" aria-haspopup="true" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="dropdownMenu1" type="button">
-            {{modal.item.option.categories[modal.item.option.now.category]}}
-            <span class="caret"></span>
-          </button>
-          <ul aria-labelledby="dropdownMenu1" class="dropdown-menu">
-            <li ng-repeat="cat in modal.item.option.categories">
-              <a href="#" ng-click="modal.item.option.now.category = $index">{{cat}}</a>
-            </li>
-          </ul>
-        </span>
-        <input type="text" name="name" ng-model="modal.item.option.now.value" ng-if="modal.item.option.value"/>
+      <div class="modal-body container-fluid">
+        <div class="row">
+            <span>{{modal.item.option.name}}</span>
+            <span class="dropdown">
+              <button aria-expanded="true" aria-haspopup="true" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="dropdownMenu1" type="button">
+                {{modal.item.option.categories[modal.item.option.now.category]}}
+                <span class="caret"></span>
+              </button>
+              <ul aria-labelledby="dropdownMenu1" class="dropdown-menu">
+                <li ng-repeat="cat in modal.item.option.categories">
+                  <a href="#" ng-click="modal.item.option.now.category = $index">{{cat}}</a>
+                </li>
+              </ul>
+            </span>
+            <input type="text" name="name" ng-model="modal.item.option.now.value" ng-if="modal.item.option.value"/>
+        </div>
+        <div class="row" ng-repeat="variable in modal.item.option.variables">
+            <div ng-if="variable.default != undefined">
+                <span>{{variable.name}}</span>
+                <span>=</span>
+                </span>
+                <input type="text" name="name" ng-model="variable.default"/>
+            </div>
+        </div>
       </div>
       <div class="modal-footer">
         <button class="btn btn-primary"  data-dismiss="modal"  type="button">OK</button>
