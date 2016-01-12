@@ -47,8 +47,6 @@ def widgets():
 
 import ctx
 
-# actuator = Actuator()
-# actuator.doFacebook({"value": "Raine Borba", "variables": {"messagem": "Hello"}})
 gen_time = ctx.TimeGenerator()
 gen_calendar = ctx.CalendarGenerator("tgkehbl0fecu2htgfai7qdkh7k@group.calendar.google.com")
 gen_gps = ctx.GPSGenerator(100)
@@ -60,9 +58,9 @@ wgt_location = ctx.LocationWidget((-8.1075833, -35.0207727), gen_gps)
 widgets = [wgt_time, wgt_agenda, wgt_location]
 interpreter = ctx.Interpreter(recipesTable, widgets)
 
-gen_calendar.start(15)
-gen_time.start(2)
-gen_gps.start(5)
-interpreter.interpret(5)
+gen_calendar.start()
+gen_time.start()
+gen_gps.start()
+interpreter.start()
 
 run(host='localhost', port=8080, debug=True)

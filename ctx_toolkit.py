@@ -62,7 +62,7 @@ class Generator(Observable):
         certainty = new_property['accuracy'] + (self.relevance * 100 * new_property['accuracy']) > self.threshold
         return certainty
 
-    def start(self, delay):
+    def start(self, delay=5):
         new_property = self.generate()
         if new_property['value'] != self.property and self.has_acceptable_certainty(new_property):
             self.property = new_property['value']

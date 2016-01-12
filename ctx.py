@@ -144,7 +144,7 @@ class Interpreter:
             action_variable['value'] = replace(action_variable['value'])
         return recipe
 
-    def interpret(self, delay):
+    def start(self, delay=5):
         recipes = self.recipesTable.all()
         for recipe in recipes:
             is_ready = len(recipe['context']) > 0
@@ -160,7 +160,7 @@ class Interpreter:
                 recipe = self.update_variables(self.get_variables(), recipe)
                 self.actuator.execute_in_background(recipe)
             self.statuses[recipe['name']] = is_ready
-        timer_task = Timer(delay, lambda: self.interpret(delay), ())
+        timer_task = Timer(delay, lambda: self.start(delay), ())
         timer_task.start()
 
     def check_agenda(self, ctx):
