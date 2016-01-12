@@ -1,3 +1,4 @@
+from abc import abstractmethod
 from threading import Timer
 
 
@@ -26,6 +27,10 @@ class Observable:
 
 
 class Widget(Observable, Observer):
+    @abstractmethod
+    def update(self, event):
+        pass
+
     def __init__(self, type, status_name, *generators):
         super(Widget, self).__init__()
         self.type = type
@@ -35,7 +40,7 @@ class Widget(Observable, Observer):
         for generator in generators:
             generator.register(self)
 
-    def getproperty(self, type):
+    def get_property(self, type):
         for generator in self.generators:
             if generator.type == type:
                 return generator.property
@@ -47,20 +52,21 @@ class Generator(Observable):
         self.property = None
         self.type = type
         self.relevance = relevance
-        self.threshold
+        self.threshold = threshold
 
     def generate(self):
-        # generate a dict, e.g.: {"value": 12, "certainity" : 0.9}
+        # generate a dict, e.g.: {"value": 12, "certainty" : 0.9}
         raise NotImplementedError("Not implemented")
 
-    def has_acceptable_certainity(self, new_property):
-        return new_property.certainity + (self.relevance * new_property.certainity) < self.threshold
+    def has_acceptable_certainty(self, new_property):
+        certainty = new_property['accuracy'] + (self.relevance * 100 * new_property['accuracy']) > self.threshold
+        return certainty
 
     def start(self, delay):
         new_property = self.generate()
-        if new_property['value'] != self.property and self.has_acceptable_certainity(new_property):
+        if new_property['value'] != self.property and self.has_acceptable_certainty(new_property):
             self.property = new_property['value']
             event = Event(self.type, property=new_property['value'])
             super().notify(event)
-        timerTask = Timer(delay, lambda: self.start(delay), ())
-        timerTask.start();
+        timer_task = Timer(delay, lambda: self.start(delay), ())
+        timer_task.start()

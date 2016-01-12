@@ -9,25 +9,25 @@ widgets = []
 
 
 @get('/recipe')
-def getRecipes():
+def get_recipes():
     response.content_type = "application/json";
     return json.dumps(recipesTable.all(), ensure_ascii=False).encode("utf-8");
 
 
 @post('/recipe')
-def newRecipe():
+def new_recipe():
     recipesTable.insert(request.json);
 
 
 @delete('/recipe/<name>')
-def deleteRecipe(name):
+def delete_recipe(name):
     recipesTable.remove(where('name') == name)
 
 
 # Static files
-@route('/<filepath:path>')
-def server_static(filepath):
-    return static_file(filepath, root='./static')
+@route('/<file_path:path>')
+def server_static(file_path):
+    return static_file(file_path, root='./static')
 
 
 # Static files
@@ -49,17 +49,20 @@ import ctx
 
 # actuator = Actuator()
 # actuator.doFacebook({"value": "Raine Borba", "variables": {"messagem": "Hello"}})
-gen_time = ctx.TimeGerator()
+gen_time = ctx.TimeGenerator()
 gen_calendar = ctx.CalendarGenerator("tgkehbl0fecu2htgfai7qdkh7k@group.calendar.google.com")
+gen_gps = ctx.GPSGenerator(100)
 
 wgt_time = ctx.TimeWidget(gen_time)
 wgt_agenda = ctx.AgendaWidget(gen_time, gen_calendar)
+wgt_location = ctx.LocationWidget((-8.1075833, -35.0207727), gen_gps)
 
-widgets = [wgt_time, wgt_agenda]
+widgets = [wgt_time, wgt_agenda, wgt_location]
 interpreter = ctx.Interpreter(recipesTable, widgets)
 
 gen_calendar.start(15)
-gen_time.start(5)
+gen_time.start(2)
+gen_gps.start(5)
 interpreter.interpret(5)
 
 run(host='localhost', port=8080, debug=True)

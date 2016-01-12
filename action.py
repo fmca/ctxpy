@@ -1,7 +1,7 @@
-from subprocess import call
 from threading import Thread
 
 from uiautomator import device as d
+from util import Adb
 
 
 class Actuator:
@@ -49,13 +49,3 @@ class Actuator:
     @staticmethod
     def get_var(var_name, variables):
         return next(filter(lambda var: var['name'] == var_name, variables))['value']
-
-
-class Adb:
-    @staticmethod
-    def write(text):
-        call(["adb", "shell", "input", "text", "'" + text.replace(' ', '%s') + "'"])
-
-    @staticmethod
-    def start(activity):
-        call(["adb", "shell", "am", "start", activity])
