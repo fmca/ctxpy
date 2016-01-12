@@ -1,8 +1,8 @@
 ifctt.constant("contextIngredients", [{
-    name: "Ligação",
+    name: "LigaÃ§Ã£o",
 	id: "Ligacao",
     option: {
-      name: "Número",
+      name: "NÃºmero",
       categories: ["=", "!="],
       value: true,
       now: {
@@ -29,7 +29,7 @@ ifctt.constant("contextIngredients", [{
     color: '#3498db',
     icon: 'glyphicon-calendar'
   }, {
-    name: "Horário",
+    name: "HorÃ¡rio",
 	id: "Horario",
     option: {
       name: "Agora",
@@ -46,7 +46,7 @@ ifctt.constant("contextIngredients", [{
     color: '#f39c12',
     icon: 'glyphicon-time'
   }, {
-    name: "Localização",
+    name: "LocalizaÃ§Ã£o",
 	id: "Localizacao",
     option: {
       name: "Estiver",
@@ -54,7 +54,10 @@ ifctt.constant("contextIngredients", [{
       value: false,
       now: {
         category: 0
-      }
+      },
+      variables: [
+        {"name": "$emCasa"}
+      ]
     },
     color: '#e74c3c',
     icon: 'glyphicon-map-marker'
@@ -68,7 +71,7 @@ ifctt.constant("contextIngredients", [{
     name: "Ligar para",
 	id: "Call",
     option: {
-      name: "Número",
+      name: "NÃºmero",
       categories: ["="],
       value: true,
       now: {
@@ -104,7 +107,7 @@ ifctt.constant("contextIngredients", [{
       value: true,
       now: {
         category: 1,
-        value: "José"
+        value: "Josï¿½"
       },
       variables: [
         {name: "$mensagem", default: "Ola!"},

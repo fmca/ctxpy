@@ -2,7 +2,7 @@
 <html  ng-app="ifctt" ng-controller="NavCtrl">
 
 <head>
-  <meta charset="iso-88591-1">
+  <meta charset="utf-8">
   <title>IFCTT</title>
   <link rel="stylesheet" href="css/lib/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
   <link rel="stylesheet" href="css/lib/ng-sortable.min.css" media="screen" title="no title" charset="utf-8">
@@ -62,9 +62,9 @@
             Variáveis extras
         </div>
         <div class="panel-body">  
-            <ul class="nav nav-pills" role="tablist" id="myTabs" style="width: 100%; list-style-type:disc">
-                  <li role="presentation" ng-repeat="ingredient in context.recipe"><span ng-repeat="variable in ingredient.option.variables" class="label label-success">{{variable.name}}</span></li>
-                  <li role="presentation" ng-repeat="ingredient in action.recipe"><span ng-repeat="variable in ingredient.option.variables"><span class="label label-primary">{{variable.name}}</span> = <span>{{variable.default}}</span></span></li>
+            <ul class="nav nav-pills" role="tablist">
+                  <li role="presentation" ng-repeat="ingredient in context.recipe"><span ng-repeat="variable in ingredient.option.variables" style="margin-right: 10px" class="label label-success">{{variable.name}}</span></li>
+                  <li role="presentation" ng-repeat="ingredient in action.recipe"><span ng-repeat="variable in ingredient.option.variables" style="margin-right: 10px"><span class="label label-primary">{{variable.name}}</span> = <span>{{variable.default}}</span></span></li>
             </ul>
         </div>
     </div>
