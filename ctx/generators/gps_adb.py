@@ -1,4 +1,6 @@
+import re
 import traceback
+from ctx.generators.util import Adb, StrUtils
 from ctx.toolkit import Generator
 
 __author__ = 'fmca'

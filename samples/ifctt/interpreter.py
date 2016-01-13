@@ -3,7 +3,6 @@ from threading import Timer
 
 from samples.ifctt.action import Actuator
 
-
 class Interpreter:
     def __init__(self, recipes_table, widgets):
         self.recipesTable = recipes_table;

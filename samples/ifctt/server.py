@@ -1,3 +1,8 @@
+import sys
+import os.path
+# importing parent modules
+sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))
+
 import json
 
 from bottle import route, get, post, delete, static_file, response, request, run
@@ -54,7 +59,8 @@ def widgets():
 @get('/configs')
 def configs():
     response.content_type = "application/json"
-    answer = [configs_table.search(where('name') == 'calendar')[0], configs_table.search(where('name') == 'location')[0]]
+    answer = [configs_table.search(where('name') == 'calendar')[0],
+              configs_table.search(where('name') == 'location')[0]]
     return json.dumps(answer, ensure_ascii=False).encode("iso-8859-1")
 
 

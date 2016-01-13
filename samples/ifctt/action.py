@@ -1,7 +1,7 @@
 from threading import Thread
 
 from uiautomator import device as d
-from samples.ifctt.util import Adb
+from ctx.generators.util import Adb
 
 
 class Actuator:

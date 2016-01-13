@@ -1,5 +1,6 @@
-from datetime import datetime, time
+from datetime import datetime
 import json
+import time
 from time import mktime
 import urllib
 from ctx.toolkit import Generator
