@@ -1,4 +1,6 @@
 # ctxpy
+[![Build Status](https://travis-ci.org/fmca/ctxpy.svg)](https://travis-ci.org/fmca/ctxpy)
+
 Library created to support the development of context-aware applications.
 It is based on the concepts of http://contexttoolkit.sourceforge.net/
 
