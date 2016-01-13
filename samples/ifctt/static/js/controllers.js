@@ -24,6 +24,53 @@ ifctt.controller('WidgetCtrl', function($scope, $rootScope, $http, $timeout){
 	
 	$scope.getWidgets();
 });
+ifctt.controller('ConfigsCtrl', function($scope, $rootScope, $http, $timeout){
+	$scope.configs = []
+	$scope.lastConfigs = []
+
+	$scope.compare = function(newC, old){
+	  equals = true;
+	  if(old == undefined || old.length == 0){
+        return false
+	  }
+	  for(var i=0; i<old.length; i++){
+	    config = old[i];
+	    console.log(config.value, newC[i].value, config.value != newC[i].value)
+	    if(config.value != newC[i].value){
+	      equals = false;
+	    }
+	  }
+	  console.log(equals)
+	  return equals;
+	}
+	$scope.getConfigs = function(){
+		if($rootScope.getMenu() == 'configs'){
+				$http.get('/configs').then(function(response){
+				    if(!$scope.compare(response.data, $scope.lastConfigs)){
+				      $scope.configs = response.data;
+					  $scope.lastConfigs = response.data;
+				    }
+					$timeout($scope.getConfigs, 1500);
+				}, function(){$timeout($scope.getConfigs, 1500);});
+		}else{
+			$timeout($scope.getConfigs, 1500);
+		}
+    };
+    
+    $scope.saveConfigs = function(){
+		if($rootScope.getMenu() == 'configs' && !$scope.compare($scope.configs, $scope.lastConfigs)){
+				$http.post('/configs', $scope.configs).then(function(response){
+				    $scope.lastConfigs = $scope.configs
+					$timeout($scope.saveConfigs, 10000);
+				}, function(){$timeout($scope.saveConfigs, 10000);});
+		}else{
+			$timeout($scope.saveConfigs, 10000);
+		}
+	};
+
+	$scope.getConfigs();
+	$scope.saveConfigs();
+});
 ifctt.controller('RecipesCtrl', function($scope, $rootScope, $http, $timeout){
 	$scope.recipes = []
 	$scope.getRecipes = function(){

@@ -1,5 +1,6 @@
 from abc import abstractmethod
 from threading import Timer
+from ctx.uncertainty.measurers import clear_dobson_paddy
 
 
 class Event:
@@ -47,8 +48,9 @@ class Widget(Observable, Observer):
 
 
 class Generator(Observable):
-    def __init__(self, type, relevance, threshold):
+    def __init__(self, type, relevance, threshold, certainty_measurer=clear_dobson_paddy):
         super().__init__()
+        self.certainty_measurer = certainty_measurer
         self.property = None
         self.type = type
         self.relevance = relevance
@@ -59,8 +61,9 @@ class Generator(Observable):
         raise NotImplementedError("Not implemented")
 
     def has_acceptable_certainty(self, new_property):
-        certainty = new_property['accuracy'] + (self.relevance * 100 * new_property['accuracy']) > self.threshold
-        return certainty
+        certainty_level = self.certainty_measurer(self.relevance, new_property['accuracy'])
+        is_acceptable = certainty_level > self.threshold
+        return is_acceptable
 
     def start(self, delay=5):
         new_property = self.generate()
@@ -70,3 +73,5 @@ class Generator(Observable):
             super().notify(event)
         timer_task = Timer(delay, lambda: self.start(delay), ())
         timer_task.start()
+
+

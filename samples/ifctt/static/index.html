@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html ng-app="ifctt" ng-controller="NavCtrl">
+
+<head>
+    <meta charset="utf-8">
+    <title>IFCTT</title>
+    <link rel="stylesheet" href="css/lib/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="css/lib/ng-sortable.min.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="css/lib/ng-sortable.style.min.css" media="screen" title="no title" charset="utf-8">
+    <link rel='stylesheet' href='css/lib/loading-bar.min.css' type='text/css' media='all'/>
+    <link rel="stylesheet" href="css/index.css" media="screen" title="no title" charset="utf-8">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="js/lib/jquery.min.js" charset="utf-8"></script>
+    <script src="js/lib/angular.min.js" charset="utf-8"></script>
+    <script src="js/lib/bootstrap.min.js" charset="utf-8"></script>
+    <script src="js/lib/ng-sortable.min.js" charset="utf-8"></script>
+    <script type='text/javascript' src='js/lib/loading-bar.min.js'></script>
+    <script src="js/lib/angular-sanitize.js"></script>
+    <script src="js/modules.js" charset="utf-8"></script>
+    <script src="js/constants.js" charset="iso-88591-1"></script>
+    <script src="js/controllers.js" charset="utf-8"></script>
+</head>
+
+<body ng-controller="ContextCtrl">
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">IFCTT</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar">
+            <ul class="nav navbar-nav">
+                <li ng-class="{active: menu.current=='home'}"><a href="#" ng-click="menu.current='home'; init();">Nova
+                    Receita</a></li>
+                <li ng-class="{active: menu.current=='widgets'}"><a href="#"
+                                                                    ng-click="menu.current='widgets'">Widgets</a></li>
+                <li ng-class="{active: menu.current=='recipes'}"><a href="#"
+                                                                    ng-click="menu.current='recipes'">Receitas</a></li>
+                <li ng-class="{active: menu.current=='configs'}"><a href="#"
+                                                                    ng-click="menu.current='configs'">Configurações</a></li>
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#"></a>
+                </li>
+
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>
+<div class="container">
+
+    <div id="home" ng-if="menu.current == 'home'">
+        <div class="panel panel-default"
+             ng-show="current.type == 'action' && (context.recipe.length >1 || action.recipe.length >1)">
+            <div class="panel-heading">
+                Variáveis extras
+            </div>
+            <div class="panel-body">
+                <ul class="nav nav-pills" role="tablist">
+                    <li role="presentation" ng-repeat="ingredient in context.recipe"><span
+                            ng-repeat="variable in ingredient.option.variables" style="margin-right: 10px"
+                            class="label label-success">{{variable.name}}</span></li>
+                    <li role="presentation" ng-repeat="ingredient in action.recipe"><span
+                            ng-repeat="variable in ingredient.option.variables" style="margin-right: 10px"><span
+                            class="label label-primary">{{variable.name}}</span> = <span>{{variable.default}}</span></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <ul class="nav nav-pills" role="tablist" id="myTabs" style="width: 100%">
+            <li role="presentation" ng-class="{active: current.type == 'context'}"><a ng-click="toggle('context')"
+                                                                                      href="#recipe"
+                                                                                      aria-controls="home" role="tab"
+                                                                                      data-toggle="tab">Contexto</a>
+            </li>
+            <li role="presentation" ng-class="{active: current.type == 'action'}"><a ng-click="toggle('action')"
+                                                                                     href="#action"
+                                                                                     aria-controls="profile" role="tab"
+                                                                                     data-toggle="tab">Ações</a></li>
+        </ul>
+        <div class="row">
+            <div id="sortable-container" class="col-md-12">
+                <div class="col-md-10 col-lg-10 row">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Receita
+                        </div>
+                        <div class="panel-body">
+                            <div class="sortable-row workspace" as-sortable="sortableOptions"
+                                 data-ng-model="current.recipe">
+                                <div ng-class="{'item-placeholder no-drag': item.type == 'placeholder'}"
+                                     ng-style="{'background-color': item.color}" ng-repeat="item in current.recipe"
+                                     as-sortable-item>
+                                    <div class="square" ng-if="item.type != 'placeholder'">
+
+                                        <div as-sortable-item-handle>
+                                            <span>{{item.option.name}} {{item.option.categories[item.option.now.category]}}</span><span
+                                                ng-bind-html="toVariableStr(item.option.now.value)"></span>
+                                        </div>
+                                        <div>
+                                            <a data-no-drag class="sortable-option pull-right btn btn-xs"
+                                               ng-click="deleteItem($index)">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            </a>
+                                            <a data-no-drag class="sortable-option pull-right btn btn-xs"
+                                               data-toggle="modal" data-target="#myModal" ng-click="modal.item = item">
+                                                <span class="glyphicon glyphicon-pencil"></span>
+                                            </a>
+                          <span data-no-drag class="sortable-icon pull-left" ng-click="removeItem($index)">
+                            <span class="glyphicon" ng-class="item.icon"></span>
+                          </span>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="menu.current=='home'" class="pull-right">
+                        <button data-toggle="modal" data-target="#saveConfirmation" class="btn btn-primary"
+                                style="margin-top: 5px"><span ng-if="!saving">Salvar Receita</span><span ng-if="saving">Salvando...</span>
+                        </button>
+                    </div>
+
+                </div>
+
+                <div class="col-md-2 col-lg-2" style="float: right;">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Ingredientes
+                        </div>
+                        <div class="panel-body">
+                            <div class="sortable-row" as-sortable="sortableCloneOptions"
+                                 data-ng-model="current.ingredients">
+                                <div ng-repeat="item in current.ingredients" ng-style="{'background-color': item.color}"
+                                     as-sortable-item>
+                                    <div class="square">
+                        <span data-no-drag class="sortable-icon pull-left" ng-click="removeItem($index)">
+                          <span class="glyphicon" ng-class="item.icon"></span>
+                        </span>
+
+                                        <div as-sortable-item-handle>
+                                            <span>{{item.name}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div ng-include="'views/modal_edit.html'"></div>
+    </div>
+
+    <div id="widgets" ng-show="menu.current=='widgets'" ng-controller="WidgetCtrl">
+        <ul class="list-group">
+            <li class="list-group-item" ng-repeat="widget in widgets">
+                <span class="badge">{{widget.status}}</span>
+                {{widget.type}}
+            </li>
+        </ul>
+    </div>
+
+    <div id="recipes" ng-show="menu.current=='recipes'" ng-controller="RecipesCtrl">
+        <div class="panel panel-primary" ng-repeat="recipe in recipes">
+            <div class="panel-heading">
+                {{recipe.name}}
+                <a href="#" style="color: white" ng-click="remove(recipe.name)">
+			 <span class="glyphicon glyphicon-trash pull-right">
+			  </span>
+                </a>
+            </div>
+            <div class="panel-body">
+                <ul class="list-group col-md-5">
+                    <li class="list-group-item" ng-repeat="ctx in recipe.context">
+                        <span class="badge">{{ctx.category}} {{ctx.value}}</span>
+                        <span>{{ctx.id}}</span>
+                    </li>
+                </ul>
+
+                <ul class="list-group col-md-5">
+                    <li class="list-group-item" ng-repeat="act in recipe.action ">
+                        <span class="badge">{{act.category}} {{act.value}}</span>
+                        <span>{{act.id}}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="configs" ng-show="menu.current=='configs'" ng-controller="ConfigsCtrl">
+        <ul class="list-group">
+            <li class="list-group-item" ng-repeat="config in configs">
+                <div class="input-group">
+                    <span class="input-group-addon">{{config.name}}</span>
+                    <input type="text" class="form-control" ng-model="config.value">
+                </div>
+
+            </li>
+        </ul>
+    </div>
+
+</div>
+
+
+<div id="saveConfirmation" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Nova receita</h4>
+            </div>
+            <div class="modal-body">
+                <p>Dê um nome que você consiga lembrar :) </p>
+                <input type="text" class="form-control" ng-model="current.name"/>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="save()">Salvar</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+</body>
+
+</html>
