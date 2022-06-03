@@ -1,4 +1,4 @@
-bottle==0.12.9
+bottle==0.12.20
 geopy==1.11.0
 tinydb==3.1.0
 uiautomator==0.1.32
